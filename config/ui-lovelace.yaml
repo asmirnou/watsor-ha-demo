@@ -1,0 +1,89 @@
+title: Home
+views:
+  - path: default_view
+    title: Home
+    badges: []
+    cards:
+      - type: alarm-panel
+        name: Alarm Control
+        entity: alarm_control_panel.home_alarm
+        states:
+          - arm_home
+
+      - type: entities
+        title: Object Detection
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.camera1_person_detected
+            name: Person on Camera 1
+          - type: divider
+          - type: weblink
+            name: Cameras plain view
+            url: http://127.0.0.1:8123/local/surv.html
+
+      - type: conditional
+        conditions:
+          - entity: alert.camera1
+            state_not: "idle"
+        card:
+          title: Problems
+          type: entities
+          entities:
+            - alert.camera1
+
+      - type: weather-forecast
+        entity: weather.home
+
+  - path: cameras
+    title: Cameras
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: conditional
+            conditions:
+              - entity: switch.camera1_detection
+                state: "on"
+            card:
+              type: picture-entity
+              name: Camera 1
+              entity: camera.camera1_detection
+
+          - type: conditional
+            conditions:
+              - entity: switch.camera1_detection
+                state: "off"
+            card:
+              type: picture-entity
+              name: Camera 1
+              entity: camera.camera1
+
+          - type: glance
+            entities:
+              - entity: binary_sensor.camera1_person_detected
+                name: Person
+              - entity: sensor.camera1_detection_fps_in
+                name: Input FPS
+              - entity: sensor.camera1_detection_fps_out
+                name: Output FPS
+              - entity: sensor.camera1_detection_buffer
+                name: Buffer
+                icon: mdi:buffer
+
+  - path: metrics
+    title: Metrics
+    badges: []
+    cards:
+      - type: history-graph
+        entities:
+          - entity: sensor.detector1_fps
+            name: Detector 1 FPS
+          - entity: sensor.detector1_fps_max
+            name: Detector 1 FPS MAX
+        hours_to_show: 12
+
+      - type: history-graph
+        entities:
+          - entity: sensor.detector1_inference_time
+            name: Detector 1 inference time
+        hours_to_show: 12

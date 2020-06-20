@@ -1,0 +1,7 @@
+camera1:
+  name: Camera1 is broken
+  done_message: Camera1 is fixed
+  entity_id: binary_sensor.camera1_fps_is_low
+  repeat: 30
+  notifiers:
+    - email

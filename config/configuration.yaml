@@ -1,0 +1,70 @@
+alarm_control_panel: !include alarm-control-panel.yaml
+
+alert: !include alerts.yaml
+
+android_ip_webcam: !include android-ip-webcams.yaml
+
+automation: !include automations.yaml
+
+binary_sensor: !include binary-sensors.yaml
+
+camera: !include cameras.yaml
+
+config:
+
+downloader:
+  download_dir: /tmp
+
+frontend:
+
+group: !include groups.yaml
+
+history:
+
+homeassistant:
+  unit_system: metric
+  time_zone: !secret time_zone
+  name: !secret name
+  whitelist_external_dirs:
+    - "/tmp"
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+logger:
+  default: info
+
+lovelace:
+  mode: yaml
+
+mobile_app:
+
+mqtt:
+  broker: localhost
+
+notify: !include notifications.yaml
+
+person:
+
+recorder:
+  db_url: sqlite:///config/.storage/home-assistant_v2.db
+  include:
+    entities:
+      - alarm_control_panel.home_alarm
+      - binary_sensor.camera1_person_detected
+      - sensor.detector1_fps
+      - sensor.detector1_fps_max
+      - sensor.detector1_inference_time
+
+scene: !include scenes.yaml
+
+script: !include scripts.yaml
+
+sensor: !include sensors.yaml
+
+shell_command: !include shell.yaml
+
+switch: !include switches.yaml
+
+system_health:

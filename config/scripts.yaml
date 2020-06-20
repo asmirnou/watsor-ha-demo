@@ -1,0 +1,33 @@
+person_detection_alert:
+  alias: Alert if a person is detected
+  fields:
+    camera:
+      description: 'Camera name for files triage'
+    when:
+      description: 'Date and time of event as string'
+  sequence:
+  - service: camera.snapshot
+    data_template:
+      entity_id: "camera.{{ camera }}_detection"
+      filename: "config/www/{{ camera }}/snapshot_{{ when }}.jpg"
+  - service: persistent_notification.create
+    data_template:
+      title: "A person was detected."
+      message: >
+        <img src="/local/{{ camera }}/snapshot_{{ when }}.jpg" width="100%" />
+  - service: camera.snapshot
+    data_template:
+      entity_id: "camera.{{ camera }}_detection"
+      filename: /tmp/snapshot1.jpg
+  - service: camera.snapshot
+    data_template:
+      entity_id: "camera.{{ camera }}"
+      filename: /tmp/snapshot2.jpg
+  - service: notify.email
+    data_template:
+      title: 'Detection alert'
+      message: "A person was detected at {{ when }}."
+      data:
+        images:
+          - /tmp/snapshot1.jpg
+          - /tmp/snapshot2.jpg

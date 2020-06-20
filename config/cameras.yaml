@@ -1,0 +1,4 @@
+- name: camera1_detection
+  platform: mjpeg
+  mjpeg_url: http://localhost:8080/video/mjpeg/camera1
+  still_image_url: http://localhost:8080/snapshot/camera1/person

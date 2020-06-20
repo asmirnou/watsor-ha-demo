@@ -1,0 +1,40 @@
+- name: camera1_detection_fps_in
+  platform: mqtt
+  state_topic: "watsor/cameras/camera1/sensor"
+  availability_topic: "watsor/cameras/camera1/available"
+  unit_of_measurement: 'FPS'
+  value_template: "{{ value_json.fps_in }}"
+
+- name: camera1_detection_fps_out
+  platform: mqtt
+  state_topic: "watsor/cameras/camera1/sensor"
+  availability_topic: "watsor/cameras/camera1/available"
+  unit_of_measurement: 'FPS'
+  value_template: "{{ value_json.fps_out }}"
+
+- name: camera1_detection_buffer
+  platform: mqtt
+  state_topic: "watsor/cameras/camera1/sensor"
+  availability_topic: "watsor/cameras/camera1/available"
+  unit_of_measurement: '%'
+  value_template: "{{ value_json.buffer }}"
+
+
+- name: watsor_metrics
+  platform: rest
+  resource: http://localhost:8080/metrics
+  scan_interval: 5
+  json_attributes:
+    - detectors
+  value_template: 'OK'
+- platform: template
+  sensors:
+    detector1_fps:
+      value_template: '{{ states.sensor.watsor_metrics.attributes["detectors"][0]["fps"] }}'
+      unit_of_measurement: 'FPS'
+    detector1_fps_max:
+      value_template: '{{ states.sensor.watsor_metrics.attributes["detectors"][0]["fps_max"] }}'
+      unit_of_measurement: 'FPS'
+    detector1_inference_time:
+      value_template: '{{ states.sensor.watsor_metrics.attributes["detectors"][0]["inference_time"] }}'
+      unit_of_measurement: 'ms'

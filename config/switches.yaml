@@ -1,0 +1,15 @@
+- name: camera1_detection
+  platform: mqtt
+  availability_topic: "watsor/cameras/camera1/available"
+  command_topic: "watsor/cameras/camera1/command"
+  state_topic: "watsor/cameras/camera1/state"
+  qos: 1
+  retain: true
+
+
+- platform: command_line
+  switches:
+    strobe_lights:
+      command_on: "usbrelay HW554_1=1 HW554_2=1"
+      command_off: "usbrelay HW554_1=0 HW554_2=0"
+      friendly_name: Strobe Lights

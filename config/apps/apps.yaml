@@ -1,0 +1,26 @@
+Recoder1:
+  module: recoder
+  class: Recoder
+  subscriptions:
+    binary_sensor.camera1_person_detected: "on"
+    alarm_control_panel.home_alarm: "triggered"
+  command:
+    - ffmpeg
+    - -hide_banner
+    - -loglevel
+    - warning
+    - -i
+    - http://localhost:8080/video/mjpeg/camera1
+    - -c
+    - copy
+    - -f
+    - segment
+    - -segment_time
+    - '120'
+    - -reset_timestamps
+    - '1'
+    - -strftime
+    - '1'
+    - -y
+    - config/www/camera1/capture-%Y-%m-%d %H-%M-%S.mp4
+  log_level: DEBUG

@@ -1,0 +1,28 @@
+appdaemon:
+  time_zone: !secret time_zone
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: !secret elevation
+  plugins:
+    HASS:
+      type: hass
+      token: !secret hass_token
+      ha_url: http://localhost:8123
+  # If set to true, AppDaemon will only check for changes in
+  # Apps and apps.yaml files when AppDaemon is restarted
+  production_mode: false
+
+http:
+  url: http://localhost:8888
+
+api:
+
+admin:
+
+#logs:
+#  error_log:
+#    filename: logs/app-daemon.log
+#  main_log:
+#    filename: logs/app-daemon.log
+#  access_log:
+#    filename: logs/app-daemon.log

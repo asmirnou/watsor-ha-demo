@@ -1,0 +1,5 @@
+- name: Home Alarm
+  platform: manual
+  arming_time: 10
+  delay_time: 0
+  trigger_time: 120
