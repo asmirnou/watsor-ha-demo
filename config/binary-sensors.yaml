@@ -7,6 +7,15 @@
   payload_not_available: "OFF"
   expire_after: 60
 
+- name: camera1_detection_car
+  platform: mqtt
+  state_topic: "watsor/cameras/camera1/detection/car/state"
+  device_class: motion
+  availability_topic: "watsor/cameras/camera1/state"
+  payload_available: "ON"
+  payload_not_available: "OFF"
+  expire_after: 60
+
 - platform: template
   sensors:
     camera1_fps_is_low:
@@ -15,15 +24,25 @@
       friendly_name: "Camera 1 FPS is low when it's turned ON"
       value_template: "{{ states('sensor.camera1_detection_fps_in')|float < 1
                           and is_state('switch.camera1_detection', 'on') }}"
+
     camera1_no_detection:
       delay_on: 30
       device_class: motion
-      friendly_name: "Camera 1 no person detection for 30 seconds"
-      value_template: "{{ is_state('binary_sensor.camera1_detection_person', 'off')
-                          and is_state('switch.camera1_detection', 'on') }}"
+      friendly_name: "Camera 1 no detection for 30 seconds"
+      value_template: "{{ is_state('binary_sensor.camera1_detection_person', 'off') and
+                          is_state('binary_sensor.camera1_detection_car', 'off') and
+                          is_state('switch.camera1_detection', 'on') }}"
+
     camera1_person_detected:
       delay_off: 5
       device_class: motion
       friendly_name: "Camera 1 person is detected"
       availability_template: "{{ states('binary_sensor.camera1_detection_person') not in ('unknown', 'unavailable')  }}"
       value_template: "{{ is_state('binary_sensor.camera1_detection_person', 'on') }}"
+
+    camera1_car_detected:
+      delay_off: 5
+      device_class: motion
+      friendly_name: "Camera 1 car is detected"
+      availability_template: "{{ states('binary_sensor.camera1_detection_car') not in ('unknown', 'unavailable')  }}"
+      value_template: "{{ is_state('binary_sensor.camera1_detection_car', 'on') }}"

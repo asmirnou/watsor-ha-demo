@@ -15,7 +15,9 @@ views:
         show_header_toggle: false
         entities:
           - entity: binary_sensor.camera1_person_detected
-            name: Person on Camera 1
+            name: "Camera 1 - Person"
+          - entity: sensor.camera1_car_count
+            name: "Camera 1 - Car count"
           - type: divider
           - type: weblink
             name: Cameras plain view

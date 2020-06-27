@@ -53,9 +53,11 @@ recorder:
     entities:
       - alarm_control_panel.home_alarm
       - binary_sensor.camera1_person_detected
+      - binary_sensor.camera1_car_detected
       - sensor.detector1_fps
       - sensor.detector1_fps_max
       - sensor.detector1_inference_time
+      - sensor.camera1_person_count
 
 scene: !include scenes.yaml
 

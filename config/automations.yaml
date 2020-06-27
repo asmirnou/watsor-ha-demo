@@ -112,3 +112,18 @@
     - service: switch.turn_off
       entity_id:
         - switch.strobe_lights
+
+
+- alias: "Turn on the reporting of detection details"
+  trigger:
+    - platform: state
+      entity_id:
+        - switch.camera1_detection
+      to: 'on'
+  action:
+    service: mqtt.publish
+    data_template:
+      topic: "watsor/cameras/{{ trigger.to_state.object_id.split('_')[0] }}/command"
+      payload: "details = on"
+      qos: 1
+      retain: true
