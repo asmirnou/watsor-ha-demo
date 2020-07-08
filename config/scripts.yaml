@@ -31,3 +31,8 @@ person_detection_alert:
         images:
           - /tmp/snapshot1.jpg
           - /tmp/snapshot2.jpg
+  - service: notify.twilio_call
+    data:
+      message: 'A person was detected'
+      target:
+        - !secret twilio_recipient_1

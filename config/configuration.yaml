@@ -70,3 +70,7 @@ shell_command: !include shell.yaml
 switch: !include switches.yaml
 
 system_health:
+
+twilio:
+  account_sid: !secret twilio_account_sid
+  auth_token: !secret twilio_auth_token
