@@ -57,7 +57,7 @@ recorder:
       - sensor.detector1_fps
       - sensor.detector1_fps_max
       - sensor.detector1_inference_time
-      - sensor.camera1_person_count
+      - sensor.camera1_car_count
 
 scene: !include scenes.yaml
 
